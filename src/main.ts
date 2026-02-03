@@ -1,37 +1,42 @@
 // src/main.ts
 
-import { drawPoint, drawText } from "./drawCanvas";
-import { distance, midpoint, Point } from "./fractalMath";
+import { drawLine, drawPoint, drawText } from "./drawCanvas";
+import { distance, midpoint, Point, recursiveT } from "./fractalMath";
 
 
 const canvas: HTMLCanvasElement = document.getElementById('fractalCanvas') as HTMLCanvasElement;
 const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-// Obtén dimensiones dinámicamente (útil si cambias el tamaño más adelante)
-const canvasWidth: number = canvas.width;  // 1024
-const canvasHeight: number = canvas.height;  // 768
+const canvasWidth: number = canvas.width; 
+const canvasHeight: number = canvas.height; 
 
+const centerX = canvasWidth/2;
+const centerY = canvasHeight/2;
 
-// Punto CENTRADO usando ambas dimensiones
-const puntoA: Point = { 
-    x: canvasWidth  / 4,   
-    y: canvasHeight / 4,   
+const l = 500;
+const h = (Math.sqrt(3) / 2) * l;
+
+const dy = -50;
+
+const puntoG: Point = { 
+    x: centerX - (l/2) ,   
+    y: centerY + (h/2) + dy ,   
 };
 const puntoB: Point = { 
-    x: canvasWidth  / 2,   
-    y: canvasHeight / 4,   
+    x: centerX + (l/2),   
+    y: centerY + (h/2) + dy,
+};
+const puntoW: Point = { 
+    x: centerX,   
+    y: centerY - (h/2) + dy,   
 };
 
-const midPointAB = midpoint(puntoA, puntoB);
+
+recursiveT(1000/2,puntoG, puntoB, puntoW, 10, ctx);
 
 
 
-const stringDistance = `La distancia entre los 2 puntos es: ${distance(puntoA, puntoB)}`
-
-drawPoint(ctx, puntoA, 'white', 20);
-drawPoint(ctx, puntoB, 'white', 20);
-drawPoint(ctx, midPointAB, 'white', 20);
 
 
 
-drawText(stringDistance,ctx, canvasWidth, 100);
+
