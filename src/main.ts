@@ -1,26 +1,28 @@
 // src/main.ts
-const canvas = document.getElementById('fractalCanvas') as HTMLCanvasElement;
-if (!canvas) throw new Error('Canvas element not found');
 
-const ctx = canvas.getContext('2d');
-if (!ctx) throw new Error('2D context not available');
+import { Point } from "./fractalMath";
 
-const w = canvas.width;
-const h = canvas.height;
+const canvas: HTMLCanvasElement = document.getElementById('fractalCanvas') as HTMLCanvasElement;
+const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-// Cuadrado rojo centrado
-const size = 300;
-const centerX = w / 2;
-const centerY = h / 2;
-const x = centerX - size / 2;
-const y = centerY - size / 2;
+// Obtén dimensiones dinámicamente (útil si cambias el tamaño más adelante)
+const canvasWidth: number = canvas.width;  // 1024
+const canvasHeight: number = canvas.height;  // 768
 
-ctx.fillStyle = '#ff3366';
-ctx.fillRect(x, y, size, size);
+// Define tamaño del cuadrado (puedes hacerlo variable más adelante)
+const rectWidth: number = 400;
+const rectHeight: number = 400;
 
-// Borde blanco para que resalte
-ctx.strokeStyle = '#ffffff';
-ctx.lineWidth = 6;
-ctx.strokeRect(x, y, size, size);
+// Calcula posición centrada
+const centerX: number = canvasWidth / 2;
+const centerY: number = canvasHeight / 2;
+const rectX: number = centerX - (rectWidth / 2);
+const rectY: number = centerY - (rectHeight / 2);
 
-console.log('Cuadrado rojo dibujado con éxito 🎉');
+const punto:Point = {x:10,y:20};
+
+// Dibujar punto
+ctx.beginPath();
+ctx.arc(punto.x, punto.y, 3, 0, Math.PI * 2); // Radio de 3px
+ctx.fillStyle = 'red'; // Color del punto
+ctx.fill();
